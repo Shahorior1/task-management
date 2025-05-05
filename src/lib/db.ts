@@ -4,11 +4,14 @@ import { PrismaClient } from '@prisma/client';
 // exhausting your database connection limit.
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
-export const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
+// Handle connection issues
+const prismaClientSingleton = () => {
+  return new PrismaClient({
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
+};
+
+export const prisma = globalForPrisma.prisma || prismaClientSingleton();
 
 // Add better error handling
 prisma.$use(async (params, next) => {

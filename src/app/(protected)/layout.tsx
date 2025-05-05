@@ -16,13 +16,13 @@ export default async function ProtectedLayout({
   }
 
   return (
-    <div className="flex flex-col h-screen bg-blue-50">
-      <div className="flex flex-1 overflow-hidden">
-        <Navbar />
-        <main className="ml-16 md:ml-60 flex-1 p-3 sm:p-4 md:p-6 overflow-auto">
+    <div className="flex flex-col min-h-screen bg-slate-50">
+      <Navbar />
+      <main className="flex-1 pt-16 pb-16 md:pt-6 md:pb-8 md:ml-60 px-4 sm:px-6 md:px-8 overflow-auto">
+        <div className="w-full max-w-7xl mx-auto">
           {children}
-        </main>
-      </div>
+        </div>
+      </main>
       <Footer />
     </div>
   );
