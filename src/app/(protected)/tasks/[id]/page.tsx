@@ -3,18 +3,16 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { FiCheckCircle, FiClock, FiList, FiEdit2, FiTrash2 } from "react-icons/fi";
 import DeleteTask from "./DeleteTask";
-import { use } from "react";
 
 export default async function TaskDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
-  // Unwrap params using React.use()
-  const { id } = use(params);
+  const id = params.id;
   
   const session = await getServerSession(authOptions);
 

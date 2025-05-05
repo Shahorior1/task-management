@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { FiFolder } from "react-icons/fi";
 
 export default async function ProjectsPage() {

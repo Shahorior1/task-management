@@ -2,19 +2,18 @@ import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { TaskCard } from "@/components/TaskCard";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import DeleteProject from "./DeleteProject";
-import { use } from "react";
+import { normalizeTask } from "@/lib/utils";
 
 export default async function ProjectDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
-  // Unwrap params using React.use()
-  const { id } = use(params);
+  const id = params.id;
   
   const session = await getServerSession(authOptions);
 
@@ -82,7 +81,7 @@ export default async function ProjectDetailPage({
       {project.tasks.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {project.tasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
+            <TaskCard key={task.id} task={normalizeTask(task)} />
           ))}
         </div>
       ) : (

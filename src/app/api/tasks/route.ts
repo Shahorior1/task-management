@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 const taskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),

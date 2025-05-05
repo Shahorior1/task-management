@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { SessionProvider } from "@/app/components/SessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -13,7 +13,6 @@ export const metadata: Metadata = {
   // Copyright information
   creator: "Shahorior",
   publisher: "Shahorior",
-  rights: "© " + new Date().getFullYear() + " Shahorior. All rights reserved.",
 };
 
 export default async function RootLayout({

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { TaskSummary } from "@/components/TaskSummary";
 import { ProjectSummary } from "@/components/ProjectSummary";
 import Link from "next/link";
