@@ -33,12 +33,15 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
+        const errorMessage = data.message || data.error || "Something went wrong";
+        console.error("Registration error details:", data);
+        throw new Error(errorMessage);
       }
 
       // Redirect to login page on successful registration
       router.push("/login?registered=true");
     } catch (error) {
+      console.error("Registration error:", error);
       setError(error instanceof Error ? error.message : "Failed to register");
       setIsLoading(false);
     }
