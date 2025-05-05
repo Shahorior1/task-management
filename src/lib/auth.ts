@@ -16,6 +16,8 @@ declare module "next-auth" {
 }
 
 export const authOptions: NextAuthOptions = {
+  // Ensure secret exists to prevent build errors
+  secret: process.env.NEXTAUTH_SECRET || "fallback-secret-for-development-only",
   session: {
     strategy: "jwt",
   },
@@ -35,21 +37,26 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
+        try {
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+            },
+          });
 
-        if (!user || !(await compare(credentials.password, user.password))) {
+          if (!user || !(await compare(credentials.password, user.password))) {
+            return null;
+          }
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+          };
+        } catch (error) {
+          console.error("Auth error:", error);
           return null;
         }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-        };
       },
     }),
   ],
